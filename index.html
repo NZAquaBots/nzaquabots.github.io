@@ -27,7 +27,13 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <p class="progress-text">Progress: <span id="progressPercent">0%</span></p>
+            <div class="progress-controls">
+                <p class="progress-text">Progress: <span id="progressPercent">0%</span></p>
+                <button class="btn-start-again" id="startAgainBtn" onclick="startAgain()" style="display: none;">
+                    <i class="fas fa-refresh"></i>
+                    Start Again
+                </button>
+            </div>
         </div>
     </nav>
 

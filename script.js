@@ -1,6 +1,6 @@
 // Progress tracking and interactive functionality
 let completedSteps = new Set();
-let totalSteps = 26; // Total number of steps including optional ones
+let totalSteps = 25; // Total number of steps (24 main steps + 1 for either spade OR croc clip completion)
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
@@ -139,11 +139,25 @@ function expandNextStep(currentStep) {
 function updateProgress() {
     const progressFill = document.getElementById('progressFill');
     const progressPercent = document.getElementById('progressPercent');
+    const startAgainBtn = document.getElementById('startAgainBtn');
     
-    const percentage = Math.round((completedSteps.size / totalSteps) * 100);
+    // Calculate progress considering that steps 25 and 26 are alternatives (spade OR croc clip)
+    let adjustedCompletedSteps = completedSteps.size;
+    if (completedSteps.has(25) && completedSteps.has(26)) {
+        adjustedCompletedSteps -= 1; // Don't count both alternatives
+    }
+    
+    const percentage = Math.round((adjustedCompletedSteps / totalSteps) * 100);
     
     progressFill.style.width = percentage + '%';
     progressPercent.textContent = percentage + '%';
+    
+    // Show start again button if any progress has been made
+    if (completedSteps.size > 0) {
+        startAgainBtn.style.display = 'block';
+    } else {
+        startAgainBtn.style.display = 'none';
+    }
     
     // Change color based on progress
     if (percentage >= 100) {
@@ -279,10 +293,7 @@ function checkTestingComplete() {
             // All tests passed - show success
             document.getElementById('testing-complete').style.display = 'block';
             setTimeout(() => {
-                document.getElementById('testing-complete').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
-                });
+                showToast('🎉 Congratulations! You\'ve completed all the build steps! Time to test your controller!', 'success');
             }, 500);
         } else {
             // Some tests failed - show troubleshooting
@@ -291,23 +302,85 @@ function checkTestingComplete() {
     }
 }
 
-function showTroubleshooting() {
-    const troubleshootingSection = document.getElementById('troubleshooting-section');
-    troubleshootingSection.style.display = 'block';
-    
-    setTimeout(() => {
-        troubleshootingSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
+// Start again function - reset all progress
+function startAgain() {
+    if (confirm('Are you sure you want to start again? This will reset all your progress.')) {
+        // Clear all completed steps
+        completedSteps.clear();
+        
+        // Reset all step cards
+        const stepCards = document.querySelectorAll('.step-card');
+        stepCards.forEach(card => {
+            card.classList.remove('completed', 'expanded');
+            const button = card.querySelector('.btn-complete');
+            if (button) {
+                button.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+                button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+            }
         });
-    }, 500);
-    
-    showToast('Don\'t worry! Let\'s fix the issues and get your controller working! 🛠️');
+        
+        // Reset test states
+        const testSteps = document.querySelectorAll('.test-step');
+        testSteps.forEach(step => {
+            step.classList.remove('completed', 'failed');
+        });
+        
+        // Reset troubleshooting states
+        const troubleSteps = document.querySelectorAll('.trouble-step');
+        troubleSteps.forEach(step => {
+            step.classList.remove('fixed');
+        });
+        
+        // Hide testing and troubleshooting sections
+        document.getElementById('testing-section').style.display = 'none';
+        document.getElementById('troubleshooting-section').style.display = 'none';
+        document.getElementById('testing-complete').style.display = 'none';
+        
+        // Reset celebration modal
+        const celebrationModal = document.getElementById('celebration-modal');
+        if (celebrationModal) {
+            celebrationModal.style.display = 'none';
+        }
+        
+        // Clear test results
+        testResults.clear();
+        completedTests.clear();
+        
+        // Reset troubleshooting button states
+        const troubleButtons = document.querySelectorAll('.btn-trouble-fixed');
+        troubleButtons.forEach(button => {
+            button.innerHTML = '<i class="fas fa-check"></i> Fixed This Issue';
+            button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+        });
+        
+        // Reset test button states
+        const testButtons = document.querySelectorAll('.btn-test-complete');
+        testButtons.forEach(button => {
+            button.innerHTML = '<i class="fas fa-check"></i> Test Complete';
+            button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+        });
+        
+        // Expand first step
+        const firstStep = document.querySelector('[data-step="1"]');
+        if (firstStep) {
+            firstStep.classList.add('expanded');
+        }
+        
+        // Update progress and save
+        updateProgress();
+        saveProgress();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        showToast('🔄 Starting fresh! Let\'s build your AquaBot controller!', 'info');
+    }
 }
 
 function troubleFixed(issueNumber) {
     const troubleStep = document.querySelectorAll('.trouble-step')[issueNumber - 1];
     const button = troubleStep.querySelector('.btn-trouble-fixed');
+    // ...
     
     button.innerHTML = '<i class="fas fa-check-circle"></i> Fixed!';
     button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
