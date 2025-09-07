@@ -1,0 +1,56 @@
+Parts:
+Printed circuit board (PCB)
+Push button switches and caps x2 for Up and Down control
+3-position toggle switches x2 for Left and Right motor control
+RJ45 connector
+7.5A fuse and fuse holder
+Wire for battery connection 1m
+Croc clips and insulators x2
+Battery spade connectors and insulators x2
+Cable ties x2
+3d printed case
+M3 x 6mm screws x8
+
+1. Push the two push button switches into the PCB slots next to the UP and DOWN labels on the PCB. Very IMPORTANT - make sure the C NO NC labels stamped into the switches are facing upwards! Check twice before you move to the next step!
+2. Gently place the PCB into the 3D printed case, with the push buttons sliding through the front holes in the case.
+3. Check that everything lines up correctly and the buttons are straight. You may want to put some screws in to hold the PCB in place.
+4. Check that the C NO NC labels stamped into the switches are facing upwards one more time, then solder the switches in place. Remove the PCB from the case when you have finished.
+5. Place the two 3-position toggle switches into the PCB slots next to the PORT and STBD labels on the PCB. It doesn't matter which way around they go for the toggle switches.
+6. PLace the case lid on top of the two toggle switches to hold them in the right place, then flip the PCP and lid over and place it on top of the case with the lid facing down.
+7. Holding the PCB flat (you might want a friend to help you), solder in the toggle switches. Sometimes it helps to just solder one leg of the switch and then lift the board up to check that it is straight.
+8. Snap in the RJ45 connector and the fuse holder, they should stay in place by themselves.
+9. Flip the board over and solder in the RJ45 connector and the fuse holder.
+10. Strip about 5mm of insulation from the ends of the wire for the battery connection, twist the ends of the wire if you need to get all of the wire strands straight.
+11. Carefully flip the PCB over and solder the wires in, you may want to put them in one at a time if they keep slipping out.
+12. Solder the wires in place and trim the ends back if they are sticking out a long way.
+13. Zip up a cable tie around the wires about 25mm from where they are soldered into the PCB. This will stop the wires from pulling against the soldered joint so that they don't break off while you are winning the competition!
+14. Push the fuse into place in the fuse holder.
+15. Place the PCB back into the 3D printed case, and secure it with 4 screws.
+16. Make sure the wires are sitting over the slot in the top of the case, put the lid and and secure it with 4 screws.
+
+If you prefer to use spade connectors to conenct the battery, follow steps 17 - 21. If you prefer to use croc clips, follow steps 22 - 26.
+
+Steps for soldering spade connectors:
+17. Using a clip to hold a spade terminal connector, tin the wire connection by heating it up with the soldering iron and adding solder.
+18. Strip about 5mm of insulation from the ends of the wire for the battery connection and tin the end of the wire with a little solder.
+19. Slide the insulated sleeve onto the wire first, then solder the wire to the spade terminal connector by heating up the solder again and holding the wire in place until all of the solder is melted. Remove the heat and hold the wire in place for at least 5 seconds, or until the solder has solidified..
+20. Using a pair of needle-nose pliers, bend the wire crimp tabs on the spade terminal down so they sqish the wire insulation a little bit.
+21. Slide the insulated sleeve over the spade terminal connector and crimp tabs, the you can repeat steps 17 - 21 for the other wire.
+
+Steps for soldering croc clips:
+22. Using a clip to hold a croc clip, tin the wire connection by heating it up with the soldering iron and adding solder.
+23. Strip about 5mm of insulation from the ends of the wire for the battery connection and tin the end of the wire with a little solder.
+24. Slide the insulated crock clip sleeve onto the wire first, then holding the wire in place squeeze the wire crimp tabs down so they sqish the wire insulation a little bit.
+25. Solder the wire to the croc clip by heating up the solder again and holding the wire in place until all of the solder is melted.
+26. Slide the insulated crock clip sleeve over the wire crimp tabs, then you can repeat steps 22 - 26 for the other wire.
+
+Testing the controller circuit:
+1. Using a digital multimeter, set the measurement to continuity (the Ω symbol). Touch the leads of the multimeter together and check that the reading goes to 0 (or close to 0).
+2. Connect the two multimeter leads to the controller leads, the reading should go to infinity (sometimes shown as OC on the multimeter).
+3. Press both of the buttons, one at a time, then the switches one at a time. The meter should not change reading, if it goes to 0 ohms then the controller will not work and will blow the fuse if you connect the battery.
+4. Connect the controller to your AquaBot and complete the same check again. This time the reading should be infinit when no buttons are pressed, and when you press a button the reading should go to about 5 ohms.
+
+What to check if it didn't work:
+1. First - check your soldering, make sure none of the soldered joints are blobbed accross other solder joints. If you find a short, heat up the soldered joint with a clean iron and let it draw away some of the extra solder until the joint in not connecting another joint anymore.
+2. Check that the C NO NC labels stamped into the push button switches are facing upwards, if they are not then carefully melt the solder on the three legs of the switch and flip it up the other way. You may need a friend and a second soldering iron to help you with this.
+3. Check your AquaBot to make sure no wires are broken, and that the bare copper wire ends are not touching each other or the motor casing.
