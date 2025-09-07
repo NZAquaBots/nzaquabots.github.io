@@ -1,6 +1,6 @@
 // Progress tracking and interactive functionality
 let completedSteps = new Set();
-let totalSteps = 25; // Total number of steps (24 main steps + 1 for either spade OR croc clip completion)
+let totalSteps = 19; // Total number of steps (16 PCB steps + 2 connection steps + 1 testing completion)
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
@@ -123,15 +123,44 @@ function createCelebration(stepCard) {
 
 // Expand next step automatically
 function expandNextStep(currentStep) {
+    // Special case: After step 16, scroll to connection choice section
+    if (currentStep === 16) {
+        setTimeout(() => {
+            const connectionSection = document.querySelector('.connection-options');
+            if (connectionSection) {
+                connectionSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        }, 800);
+        return;
+    }
+    
+    // Special case: After connection steps (21 for spade, 26 for croc), scroll to testing section
+    if (currentStep === 21 || currentStep === 26) {
+        setTimeout(() => {
+            const testingSection = document.getElementById('testing-section');
+            if (testingSection) {
+                testingSection.style.display = 'block';
+                testingSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        }, 800);
+        return;
+    }
+    
     const nextStepCard = document.querySelector(`[data-step="${currentStep + 1}"]`);
     if (nextStepCard && !nextStepCard.classList.contains('expanded')) {
         setTimeout(() => {
             nextStepCard.classList.add('expanded');
             nextStepCard.scrollIntoView({ 
                 behavior: 'smooth', 
-                block: 'center' 
+                block: 'nearest' 
             });
-        }, 500);
+        }, 600);
     }
 }
 
@@ -141,10 +170,49 @@ function updateProgress() {
     const progressPercent = document.getElementById('progressPercent');
     const startAgainBtn = document.getElementById('startAgainBtn');
     
-    // Calculate progress considering that steps 25 and 26 are alternatives (spade OR croc clip)
-    let adjustedCompletedSteps = completedSteps.size;
-    if (completedSteps.has(25) && completedSteps.has(26)) {
-        adjustedCompletedSteps -= 1; // Don't count both alternatives
+    // Calculate progress - only count steps that contribute to completion
+    let adjustedCompletedSteps = 0;
+    
+    // Count PCB steps (1-16)
+    for (let i = 1; i <= 16; i++) {
+        if (completedSteps.has(i)) {
+            adjustedCompletedSteps++;
+        }
+    }
+    
+    // Count connection steps - only the chosen path (either spade OR croc, not both)
+    let spadeStepsCompleted = 0;
+    let crocStepsCompleted = 0;
+    
+    // Count spade steps (17-21)
+    for (let i = 17; i <= 21; i++) {
+        if (completedSteps.has(i)) {
+            spadeStepsCompleted++;
+        }
+    }
+    
+    // Count croc steps (22-26)
+    for (let i = 22; i <= 26; i++) {
+        if (completedSteps.has(i)) {
+            crocStepsCompleted++;
+        }
+    }
+    
+    // Only count the path that has been chosen (whichever has more progress)
+    if (spadeStepsCompleted > 0 && crocStepsCompleted === 0) {
+        // User chose spade path - count up to 2 steps max
+        adjustedCompletedSteps += Math.min(spadeStepsCompleted, 2);
+    } else if (crocStepsCompleted > 0 && spadeStepsCompleted === 0) {
+        // User chose croc path - count up to 2 steps max
+        adjustedCompletedSteps += Math.min(crocStepsCompleted, 2);
+    } else if (spadeStepsCompleted > 0 && crocStepsCompleted > 0) {
+        // User completed both paths - only count 2 steps total
+        adjustedCompletedSteps += 2;
+    }
+    
+    // Count testing completion
+    if (completedSteps.has('testing-complete')) {
+        adjustedCompletedSteps++;
     }
     
     const percentage = Math.round((adjustedCompletedSteps / totalSteps) * 100);
@@ -290,14 +358,29 @@ function checkTestingComplete() {
     
     if (test3Result && test4Result) {
         if (test3Result === 'pass' && test4Result === 'pass') {
-            // All tests passed - show success
+            // All tests passed - mark testing as complete step and update progress
+            completedSteps.add('testing-complete');
+            updateProgress();
+            saveProgress();
+            
+            // Show success
             document.getElementById('testing-complete').style.display = 'block';
             setTimeout(() => {
                 showToast('🎉 Congratulations! You\'ve completed all the build steps! Time to test your controller!', 'success');
             }, 500);
         } else {
             // Some tests failed - show troubleshooting
-            showTroubleshooting();
+            const troubleshootingSection = document.getElementById('troubleshooting-section');
+            troubleshootingSection.style.display = 'block';
+            
+            setTimeout(() => {
+                troubleshootingSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 500);
+            
+            showToast('Let\'s troubleshoot the issue! 🔧');
         }
     }
 }
@@ -345,6 +428,9 @@ function startAgain() {
         // Clear test results
         testResults.clear();
         completedTests.clear();
+        
+        // Remove testing completion from progress
+        completedSteps.delete('testing-complete');
         
         // Reset troubleshooting button states
         const troubleButtons = document.querySelectorAll('.btn-trouble-fixed');
@@ -583,26 +669,34 @@ function showSteps(type) {
         spadeSteps.style.display = 'block';
         crocSteps.style.display = 'none';
         
-        // Scroll to the steps
+        // Expand first step in spade section
         setTimeout(() => {
-            spadeSteps.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-        }, 100);
+            const firstSpadeStep = spadeSteps.querySelector('[data-step="17"]');
+            if (firstSpadeStep) {
+                firstSpadeStep.classList.add('expanded');
+                firstSpadeStep.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        }, 300);
         
         showToast('Great choice! Spade connectors provide a secure connection! 🔌');
     } else if (type === 'croc') {
         crocSteps.style.display = 'block';
         spadeSteps.style.display = 'none';
         
-        // Scroll to the steps
+        // Expand first step in croc section
         setTimeout(() => {
-            crocSteps.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-        }, 100);
+            const firstCrocStep = crocSteps.querySelector('[data-step="22"]');
+            if (firstCrocStep) {
+                firstCrocStep.classList.add('expanded');
+                firstCrocStep.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        }, 300);
         
         showToast('Excellent! Croc clips are easy to use and swap! 🐊');
     }

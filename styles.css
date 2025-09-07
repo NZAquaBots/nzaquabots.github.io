@@ -473,9 +473,13 @@ main {
     font-weight: 600;
 }
 
-.choice-card h3 i {
-    color: #ffd700;
+.choice-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
     margin-right: 10px;
+    vertical-align: middle;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .choice-card p {
