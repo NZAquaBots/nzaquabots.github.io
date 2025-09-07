@@ -433,6 +433,14 @@ main {
     margin-bottom: 40px;
 }
 
+.part-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
 .connection-choice {
     margin-bottom: 50px;
 }
