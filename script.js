@@ -702,6 +702,36 @@ function showSteps(type) {
     }
 }
 
+// Print the full guide
+function printGuide() {
+    // Store original inline display states so we can restore them after printing
+    const spadeSteps = document.getElementById('spade-steps');
+    const crocSteps = document.getElementById('croc-steps');
+    const troubleshootingSection = document.getElementById('troubleshooting-section');
+
+    const origSpade = spadeSteps.style.display;
+    const origCroc = crocSteps.style.display;
+    const origTrouble = troubleshootingSection.style.display;
+
+    // Temporarily show all hidden sections so they appear in print
+    spadeSteps.style.display = 'block';
+    crocSteps.style.display = 'block';
+    troubleshootingSection.style.display = 'block';
+
+    // Small delay to let the browser re-layout before printing
+    setTimeout(() => {
+        window.print();
+    }, 100);
+
+    // Restore original states after the print dialog closes
+    window.addEventListener('afterprint', function restoreState() {
+        spadeSteps.style.display = origSpade;
+        crocSteps.style.display = origCroc;
+        troubleshootingSection.style.display = origTrouble;
+        window.removeEventListener('afterprint', restoreState);
+    }, { once: true });
+}
+
 // Add touch support for mobile devices
 let touchStartY = 0;
 let touchEndY = 0;
