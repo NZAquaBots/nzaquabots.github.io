@@ -1,3 +1,111 @@
+// Language detection
+const LANG = document.documentElement.lang || 'en';
+
+// Translation helper
+const i18n = {
+    encouragements: {
+        en: [
+            "Great job! You're off to a fantastic start! 🚀",
+            "Awesome work! Keep it up! 💪",
+            "You're doing amazing! 🌟",
+            "Excellent progress! You're a natural! 🎯",
+            "Fantastic! You're really getting the hang of this! ⚡",
+            "Outstanding work! Keep going! 🏆",
+            "You're crushing it! Almost there! 🔥",
+            "Incredible job! You're so close! 🎊",
+            "Amazing work! Just a few more steps! 🚀",
+            "You're unstoppable! Keep it up! 💫"
+        ],
+        mi: [
+            "He rawe tō mahi! He tīmatanga pai tēnei! 🚀",
+            "Ka mau te wehi! Kia kaha tonu! 💪",
+            "Kei te tino pai tō mahi! 🌟",
+            "He pai te kauneke! He māmā noa iho mōu tēnei! 🎯",
+            "Tūmeke! Kei te mārama haere koe! ⚡",
+            "He mahi whakahirahira! Haere tonu! 🏆",
+            "Autaia o mahi! Tata oti! 🔥",
+            "Ka mau te wehi! Kua tata rawa koe! 🎊",
+            "He mahi pai! He torutoru noa ngā ūpane e toe ana! 🚀",
+            "Kāore e taea te aukati i a koe! Haere tonu! 💫"
+        ]
+    },
+    milestones: {
+        en: {
+            5: "🎉 Quarter way there! You're doing great!",
+            10: "🌟 Halfway point! You're amazing!",
+            15: "🚀 Three quarters done! Almost there!",
+            20: "🏆 So close to the finish line!",
+            26: "🎊 CONGRATULATIONS! You've built your AquaBot controller!"
+        },
+        mi: {
+            5: "🎉 Kua tae ki te wahanga hauwhā! Ka rawe o mahi!",
+            10: "🌟 Kua tae ki te wahanga haurua! Autaia koe!",
+            15: "🚀 Kua tae ki te wahanga toru hauwhā! Tata oti!",
+            20: "🏆 Kua tata ki te rārangi whakamutunga!",
+            26: "🎊 HŪRŌ! Kua oti i a koe te hanga i tō roumamao AquaBot!"
+        }
+    },
+    strings: {
+        en: {
+            testCompleted: (n) => `Test ${n} completed! 📋`,
+            testPassed: (n) => `Great! Test ${n} passed! ✅`,
+            testNeedsAttention: (n) => `Test ${n} needs attention. Let's troubleshoot! 🔧`,
+            buildComplete: "🎯 Build complete! Now let's test your controller to make sure it works perfectly!",
+            allTestsPassed: "🎉 Congratulations! You've completed all the build steps! Time to test your controller!",
+            troubleshoot: "Let's troubleshoot the issue! 🔧",
+            confirmStartAgain: "Are you sure you want to start again? This will reset all your progress.",
+            startingFresh: "🔄 Starting fresh! Let's build your AquaBot controller!",
+            issueFixed: (n) => `Issue ${n} fixed! Great work! 🔧`,
+            retesting: "Let's test your controller again! 🔄",
+            missionTitle: "Mission Accomplished!",
+            missionBody: "Your AquaBot controller is built AND tested! You're now ready to explore the underwater world! 🌊",
+            missionButton: "Ready to Dive! 🚀",
+            confirmReset: "Are you sure you want to reset all progress?",
+            progressReset: "Progress reset! Ready to start fresh! 🔄",
+            progressStatus: (n) => `Progress: ${n} steps completed! 📊`,
+            choiceSpade: "Great choice! Spade connectors provide a secure connection! 🔌",
+            choiceCroc: "Excellent! Croc clips are easy to use and swap! 🐊",
+            markComplete: '<i class="fas fa-check"></i> Mark Complete',
+            completed: '<i class="fas fa-check-circle"></i> Completed!',
+            fixedIssue: '<i class="fas fa-check"></i> Fixed This Issue',
+            fixedDone: '<i class="fas fa-check-circle"></i> Fixed!',
+            testComplete: '<i class="fas fa-check"></i> Test Complete',
+            testCompleteDone: '<i class="fas fa-check-circle"></i> Completed!'
+        },
+        mi: {
+            testCompleted: (n) => `Kua oti te whakamātau ${n}! 📋`,
+            testPassed: (n) => `Ka pai! Kua angitu te whakamātau ${n}! ✅`,
+            testNeedsAttention: (n) => `Me aro atu ki te whakamātau ${n}. Me raparongoā tātou! 🔧`,
+            buildComplete: "🎯 Build complete! Now let's test your controller to make sure it works perfectly!", // TODO: needs translator
+            allTestsPassed: "🎉 Hūrō! Kua oti i a koe ngā ūpane hanga katoa! Kua tae te wā ki te whakamātau i tō roumamao!",
+            troubleshoot: "Me raparongoā te raruraru! 🔧",
+            confirmStartAgain: "Kei te tino hiahia koe ki te tīmata anō? Ka tautuhi anō tēnei i tō kauneke katoa.",
+            startingFresh: "🔄 Ka tīmata hou! Me hanga tō roumamao Karetao Hiko Rukuwai!",
+            issueFixed: (n) => `Kua whakatikahia te raruraru ${n}! Ka pai tō mahi! 🔧`,
+            retesting: "Me whakamātau anō i tō roumamao! 🔄",
+            missionTitle: "Mission Accomplished!", // TODO: needs translator
+            missionBody: "Kua hanga, kua whakamātau hoki tō roumamao Karetao Hiko Rukuwai! Kua rite koe ki te torotoro i te ao o raro i te wai! 🌊",
+            missionButton: "Kua rite ki te ruku! 🚀",
+            confirmReset: "Kei te tino hiahia koe ki te tautuhi anō i tō kauneke katoa?",
+            progressReset: "Kua tautuhi anō te kauneke! Kua rite ki te tīmata hou! 🔄",
+            progressStatus: (n) => `Kauneke: ${n} ngā ūpane kua tūtuki! 📊`,
+            choiceSpade: "He kōwhiringa pai! He hononga pūmau ngā hononga pūhiko! 🔌",
+            choiceCroc: "Ka pai! He ngāwari te whakamahi me te whakawhiti i ngā kōkiri croc! 🐊",
+            markComplete: '<i class="fas fa-check"></i> Kua tūtuki',
+            completed: '<i class="fas fa-check-circle"></i> Kua tūtuki!',
+            fixedIssue: '<i class="fas fa-check"></i> Kua whakatikahia tēnei raruraru',
+            fixedDone: '<i class="fas fa-check-circle"></i> Kua whakatika!',
+            testComplete: '<i class="fas fa-check"></i> Kua Oti te Whakamātau',
+            testCompleteDone: '<i class="fas fa-check-circle"></i> Kua tūtuki!'
+        }
+    }
+};
+
+function t(key, ...args) {
+    const val = i18n.strings[LANG]?.[key] ?? i18n.strings.en[key];
+    return typeof val === 'function' ? val(...args) : val;
+}
+
 // Progress tracking and interactive functionality
 let completedSteps = new Set();
 let totalSteps = 19; // Total number of steps (16 PCB steps + 2 connection steps + 1 testing completion)
@@ -54,7 +162,7 @@ function completeStep(stepNumber) {
         stepCard.classList.add('completed');
         
         // Update button
-        button.innerHTML = '<i class="fas fa-check-circle"></i> Completed!';
+        button.innerHTML = t('completed');
         button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
         
         // Add celebration effect
@@ -76,7 +184,7 @@ function completeStep(stepNumber) {
         completedSteps.delete(stepNumber);
         stepCard.classList.remove('completed');
         
-        button.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+        button.innerHTML = t('markComplete');
         button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
         
         updateProgress();
@@ -240,26 +348,8 @@ function updateProgress() {
 
 // Show encouraging messages
 function showEncouragement(stepNumber) {
-    const messages = [
-        "Great job! You're off to a fantastic start! 🚀",
-        "Awesome work! Keep it up! 💪",
-        "You're doing amazing! 🌟",
-        "Excellent progress! You're a natural! 🎯",
-        "Fantastic! You're really getting the hang of this! ⚡",
-        "Outstanding work! Keep going! 🏆",
-        "You're crushing it! Almost there! 🔥",
-        "Incredible job! You're so close! 🎊",
-        "Amazing work! Just a few more steps! 🚀",
-        "You're unstoppable! Keep it up! 💫"
-    ];
-    
-    const milestones = {
-        5: "🎉 Quarter way there! You're doing great!",
-        10: "🌟 Halfway point! You're amazing!",
-        15: "🚀 Three quarters done! Almost there!",
-        20: "🏆 So close to the finish line!",
-        26: "🎊 CONGRATULATIONS! You've built your AquaBot controller!"
-    };
+    const messages = i18n.encouragements[LANG] || i18n.encouragements.en;
+    const milestones = i18n.milestones[LANG] || i18n.milestones.en;
     
     let message = milestones[stepNumber] || messages[Math.floor(Math.random() * messages.length)];
     
@@ -307,7 +397,7 @@ function showToast(message) {
 // Modified completion flow - guide to testing instead of immediate celebration
 function showCompletionMessage() {
     // Don't show celebration yet - guide to testing first
-    showToast('🎯 Build complete! Now let\'s test your controller to make sure it works perfectly!');
+    showToast(t('buildComplete'));
     
     // Scroll to testing section
     setTimeout(() => {
@@ -328,10 +418,10 @@ function completeTest(testNumber) {
     const testStep = document.querySelector(`[data-test="${testNumber}"]`);
     const button = testStep.querySelector('.btn-test-complete');
     
-    button.innerHTML = '<i class="fas fa-check-circle"></i> Completed!';
+    button.innerHTML = t('testCompleteDone');
     button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
     
-    showToast(`Test ${testNumber} completed! 📋`);
+    showToast(t('testCompleted', testNumber));
 }
 
 function testResult(testNumber, result) {
@@ -341,11 +431,11 @@ function testResult(testNumber, result) {
     if (result === 'pass') {
         testStep.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
         testStep.style.borderLeft = '5px solid #2ecc71';
-        showToast(`Great! Test ${testNumber} passed! ✅`);
+        showToast(t('testPassed', testNumber));
     } else {
         testStep.style.background = 'linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%)';
         testStep.style.borderLeft = '5px solid #e74c3c';
-        showToast(`Test ${testNumber} needs attention. Let\'s troubleshoot! 🔧`);
+        showToast(t('testNeedsAttention', testNumber));
     }
     
     // Check if all critical tests are done
@@ -366,7 +456,7 @@ function checkTestingComplete() {
             // Show success
             document.getElementById('testing-complete').style.display = 'block';
             setTimeout(() => {
-                showToast('🎉 Congratulations! You\'ve completed all the build steps! Time to test your controller!', 'success');
+                showToast(t('allTestsPassed'), 'success');
             }, 500);
         } else {
             // Some tests failed - show troubleshooting
@@ -380,14 +470,14 @@ function checkTestingComplete() {
                 });
             }, 500);
             
-            showToast('Let\'s troubleshoot the issue! 🔧');
+            showToast(t('troubleshoot'));
         }
     }
 }
 
 // Start again function - reset all progress
 function startAgain() {
-    if (confirm('Are you sure you want to start again? This will reset all your progress.')) {
+    if (confirm(t('confirmStartAgain'))) {
         // Clear all completed steps
         completedSteps.clear();
         
@@ -397,7 +487,7 @@ function startAgain() {
             card.classList.remove('completed', 'expanded');
             const button = card.querySelector('.btn-complete');
             if (button) {
-                button.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+                button.innerHTML = t('markComplete');
                 button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
             }
         });
@@ -435,14 +525,14 @@ function startAgain() {
         // Reset troubleshooting button states
         const troubleButtons = document.querySelectorAll('.btn-trouble-fixed');
         troubleButtons.forEach(button => {
-            button.innerHTML = '<i class="fas fa-check"></i> Fixed This Issue';
+            button.innerHTML = t('fixedIssue');
             button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
         });
         
         // Reset test button states
         const testButtons = document.querySelectorAll('.btn-test-complete');
         testButtons.forEach(button => {
-            button.innerHTML = '<i class="fas fa-check"></i> Test Complete';
+            button.innerHTML = t('testComplete');
             button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
         });
         
@@ -459,7 +549,7 @@ function startAgain() {
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        showToast('🔄 Starting fresh! Let\'s build your AquaBot controller!', 'info');
+        showToast(t('startingFresh'), 'info');
     }
 }
 
@@ -468,11 +558,11 @@ function troubleFixed(issueNumber) {
     const button = troubleStep.querySelector('.btn-trouble-fixed');
     // ...
     
-    button.innerHTML = '<i class="fas fa-check-circle"></i> Fixed!';
+    button.innerHTML = t('fixedDone');
     button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
     troubleStep.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
     
-    showToast(`Issue ${issueNumber} fixed! Great work! 🔧`);
+    showToast(t('issueFixed', issueNumber));
 }
 
 function retestController() {
@@ -497,7 +587,7 @@ function retestController() {
         });
     }, 500);
     
-    showToast('Let\'s test your controller again! 🔄');
+    showToast(t('retesting'));
 }
 
 function showFinalCelebration() {
@@ -528,17 +618,16 @@ function showFinalCelebration() {
     
     content.innerHTML = `
         <div style="font-size: 4rem; margin-bottom: 20px;">🏆</div>
-        <h2 style="color: #2ecc71; margin-bottom: 20px; font-size: 2rem;">Mission Accomplished!</h2>
+        <h2 style="color: #2ecc71; margin-bottom: 20px; font-size: 2rem;">${t('missionTitle')}</h2>
         <p style="font-size: 1.2rem; margin-bottom: 30px; color: #2c3e50;">
-            Your AquaBot controller is built AND tested! 
-            You're now ready to explore the underwater world! 🌊
+            ${t('missionBody')}
         </p>
         <button onclick="this.parentElement.parentElement.remove()" 
                 style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
                        color: white; border: none; padding: 15px 30px; 
                        border-radius: 25px; font-size: 1.1rem; 
                        font-weight: 600; cursor: pointer;">
-            Ready to Dive! 🚀
+            ${t('missionButton')}
         </button>
     `;
     
@@ -609,7 +698,7 @@ function loadProgress() {
             const button = stepCard.querySelector('.btn-complete');
             
             stepCard.classList.add('completed');
-            button.innerHTML = '<i class="fas fa-check-circle"></i> Completed!';
+            button.innerHTML = t('completed');
             button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
         });
         updateProgress();
@@ -618,19 +707,19 @@ function loadProgress() {
 
 // Reset progress (for testing)
 function resetProgress() {
-    if (confirm('Are you sure you want to reset all progress?')) {
+    if (confirm(t('confirmReset'))) {
         completedSteps.clear();
         localStorage.removeItem('aquabot-progress');
         
         document.querySelectorAll('.step-card').forEach(card => {
             card.classList.remove('completed');
             const button = card.querySelector('.btn-complete');
-            button.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+            button.innerHTML = t('markComplete');
             button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
         });
         
         updateProgress();
-        showToast('Progress reset! Ready to start fresh! 🔄');
+        showToast(t('progressReset'));
     }
 }
 
@@ -656,7 +745,7 @@ document.addEventListener('keydown', function(e) {
     // Press 'p' to show current progress
     if (e.key === 'p' && e.ctrlKey) {
         e.preventDefault();
-        showToast(`Progress: ${completedSteps.size}/${totalSteps} steps completed! 📊`);
+        showToast(t('progressStatus', completedSteps.size));
     }
 });
 
@@ -681,7 +770,7 @@ function showSteps(type) {
             }
         }, 300);
         
-        showToast('Great choice! Spade connectors provide a secure connection! 🔌');
+        showToast(t('choiceSpade'));
     } else if (type === 'croc') {
         crocSteps.style.display = 'block';
         spadeSteps.style.display = 'none';
@@ -698,7 +787,7 @@ function showSteps(type) {
             }
         }, 300);
         
-        showToast('Excellent! Croc clips are easy to use and swap! 🐊');
+        showToast(t('choiceCroc'));
     }
 }
 

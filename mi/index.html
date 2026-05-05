@@ -20,7 +20,7 @@
                 <a class="btn-lang" href="../index.html">Switch to English</a>
                 <button class="btn-print" onclick="printGuide()">
                     <i class="fas fa-print"></i>
-                    Print Guide
+                    Tāngia te aratohu
                 </button>
             </div>
             <div class="print-qr">
@@ -42,7 +42,7 @@
                 <p class="progress-text">Kauneke: <span id="progressPercent">0%</span></p>
                 <button class="btn-start-again" id="startAgainBtn" onclick="startAgain()" style="display: none;">
                     <i class="fas fa-refresh"></i>
-                    Start Again
+                    Tīmata anō
                 </button>
             </div>
         </div>
@@ -553,12 +553,12 @@
                     <div class="choice-card">
                         <h3><img src="../images/icons/spadeTerm.png" alt="Spade Terminals" class="choice-icon"> Ngā hononga pūhiko</h3>
                         <p>He hononga pūmau, he hononga haumaru ake</p>
-                        <button class="choice-btn" onclick="showSteps('spade')">Choose Spade Connectors</button>
+                        <button class="choice-btn" onclick="showSteps('spade')">Kōwhiria ngā hononga pūhiko</button>
                     </div>
                     <div class="choice-card">
                         <h3><img src="../images/icons/crocClips.png" alt="Crocodile Clips" class="choice-icon"> Ngā kōkiri Croc</h3>
-                        <p>Easy to connect and disconnect</p>
-                        <button class="choice-btn" onclick="showSteps('croc')">Choose Croc Clips</button>
+                        <p>He ngāwari te tūhono me te wetewete</p>
+                        <button class="choice-btn" onclick="showSteps('croc')">Kōwhiria ngā kōkiri croc</button>
                     </div>
                 </div>
             </div>
@@ -830,7 +830,7 @@
         <section class="section testing-section" id="testing-section">
             <h2 class="section-title">
                 <i class="fas fa-vial"></i>
-                Testing Your Controller
+                Whakamātauhia tō roumamao
             </h2>
             <p class="section-description">Ināianei, whakamātauhia tō roumamao ki a tika te haere!</p>
             
@@ -913,9 +913,9 @@
         <section class="section troubleshooting-section" id="troubleshooting-section" style="display: none;">
             <h2 class="section-title">
                 <i class="fas fa-wrench"></i>
-                Troubleshooting
+                Raparongoā
             </h2>
-            <p class="section-description">Don't worry! Let's fix the issue and get your controller working perfectly.</p>
+            <p class="section-description">Kaua e māharahara! Me whakatika te raruraru kia tika pai ai te mahi a tō roumamao.</p>
             
             <div class="troubleshooting-steps">
                 <div class="trouble-step">
@@ -923,12 +923,12 @@
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="trouble-content">
-                        <h3>Check Your Soldering</h3>
-                        <p>First - check your soldering, make sure none of the soldered joints are blobbed across other solder joints. If you find a short, heat up the soldered joint with a clean iron and let it draw away some of the extra solder until the joint is not connecting another joint anymore.</p>
+                        <h3>Tirohia ō tūhoto</h3>
+                        <p>Tuatahi – tirohia ki tō mahi tūhoto, kia kore ai tētahi hononga e pā atu ki tētahi atu. Mēnā ka kitea he hononga hē, whakamahana anō i te tūhoto mā te pūwera tūhoto mā, ā, tukuna kia heke atu te tūhoto tāpiri kia kore ai e hono ki tētahi atu hononga.</p>
                         <div class="trouble-actions">
                             <button class="btn-trouble-fixed" onclick="troubleFixed(1)">
                                 <i class="fas fa-check"></i>
-                                Fixed This Issue
+                                Kua whakatikahia tēnei raruraru
                             </button>
                         </div>
                     </div>
@@ -938,12 +938,12 @@
                         <i class="fas fa-rotate"></i>
                     </div>
                     <div class="trouble-content">
-                        <h3>Check Switch Orientation</h3>
-                        <p>Check that the C NO NC labels stamped into the push button switches are facing upwards, if they are not then carefully melt the solder on the three legs of the switch and flip it up the other way. You may need a friend and a second soldering iron to help you with this.</p>
+                        <h3>Tirohia te ahunga o ngā whakakā</h3>
+                        <p>Tirohia kia anga whakarunga ngā tohu C NO NC kua tāngia ki ngā pātene pana. Mēnā kāore, whakamahana marire i te tūhoto o ngā waewae e toru o te whakakā, kātahi ka huri kia tika te ahunga. Tērā pea me āwhina tētahi atu hoa i a koe, me whai i tētahi atu pūwera tūhoto hoki.</p>
                         <div class="trouble-actions">
                             <button class="btn-trouble-fixed" onclick="troubleFixed(2)">
                                 <i class="fas fa-check"></i>
-                                Fixed This Issue
+                                Kua whakatikahia tēnei raruraru
                             </button>
                         </div>
                     </div>
@@ -953,12 +953,12 @@
                         <i class="fas fa-robot"></i>
                     </div>
                     <div class="trouble-content">
-                        <h3>Check Your AquaBot</h3>
-                        <p>Check your AquaBot to make sure no wires are broken, and that the bare copper wire ends are not touching each other or the motor casing.</p>
+                        <h3>Tirohia tō Karetao Hiko Rukuwai</h3>
+                        <p>Tirohia tō Karetao Hiko Rukuwai kia kore ai he waea kua whati, ā, kia kaua ngā pito konukura e pā ki a rātou anō, ki te anga pūkaha rānei.</p>
                         <div class="trouble-actions">
                             <button class="btn-trouble-fixed" onclick="troubleFixed(3)">
                                 <i class="fas fa-check"></i>
-                                Fixed This Issue
+                                Kua whakatikahia tēnei raruraru
                             </button>
                         </div>
                     </div>
@@ -968,7 +968,7 @@
             <div class="trouble-complete">
                 <button class="btn-retest" onclick="retestController()">
                     <i class="fas fa-redo"></i>
-                    Test Controller Again
+                    Whakamātauhia anō tō roumamao
                 </button>
             </div>
         </section>
