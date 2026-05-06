@@ -76,14 +76,14 @@ const i18n = {
             testCompleted: (n) => `Kua oti te whakamātau ${n}! 📋`,
             testPassed: (n) => `Ka pai! Kua angitu te whakamātau ${n}! ✅`,
             testNeedsAttention: (n) => `Me aro atu ki te whakamātau ${n}. Me raparongoā tātou! 🔧`,
-            buildComplete: "🎯 Build complete! Now let's test your controller to make sure it works perfectly!", // TODO: needs translator
+            buildComplete: "🎯 Kua oti te hanga! Ināianei, whakamātauhia tō roumamao kia tika pai ai te mahi!",
             allTestsPassed: "🎉 Hūrō! Kua oti i a koe ngā ūpane hanga katoa! Kua tae te wā ki te whakamātau i tō roumamao!",
             troubleshoot: "Me raparongoā te raruraru! 🔧",
             confirmStartAgain: "Kei te tino hiahia koe ki te tīmata anō? Ka tautuhi anō tēnei i tō kauneke katoa.",
             startingFresh: "🔄 Ka tīmata hou! Me hanga tō roumamao Karetao Hiko Rukuwai!",
             issueFixed: (n) => `Kua whakatikahia te raruraru ${n}! Ka pai tō mahi! 🔧`,
             retesting: "Me whakamātau anō i tō roumamao! 🔄",
-            missionTitle: "Mission Accomplished!", // TODO: needs translator
+            missionTitle: "Kua tutuki te kaupapa!",
             missionBody: "Kua hanga, kua whakamātau hoki tō roumamao Karetao Hiko Rukuwai! Kua rite koe ki te torotoro i te ao o raro i te wai! 🌊",
             missionButton: "Kua rite ki te ruku! 🚀",
             confirmReset: "Kei te tino hiahia koe ki te tautuhi anō i tō kauneke katoa?",
